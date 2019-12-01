@@ -1,8 +1,3 @@
-/*
-go run upload_video.go errors.go oauth2.go --filename="test.mov" --title="Test video" --keywords="golang test"
-# 重新oauth验证
-删除 ~/.credentials/youtube-go.json
-*/
 package main
 
 import (

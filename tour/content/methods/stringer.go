@@ -14,6 +14,7 @@ package main
 
 import "fmt"
 
+// typedef
 type Person struct {
 	Name string
 	Age  int

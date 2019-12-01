@@ -28,6 +28,7 @@ func main() {
 
 	client := getClient(youtube.YoutubeUploadScope)
 
+	log.Print("Creating youtube client...")
 	service, err := youtube.New(client)
 	if err != nil {
 		log.Fatalf("Error creating YouTube client: %v", err)
@@ -55,6 +56,7 @@ func main() {
 		log.Fatalf("Error opening %v: %v", *filename, err)
 	}
 
+	fmt.Printf("Uploading video...")
 	response, err := call.Media(file).Do()
 	handleError(err, "")
 	fmt.Printf("Upload successful! Video ID: %v\n", response.Id)

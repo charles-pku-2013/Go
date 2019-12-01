@@ -1,3 +1,8 @@
+/*
+go run upload_video.go errors.go oauth2.go --filename="test.mov" --title="Test video" --keywords="golang test"
+# 重新oauth验证
+删除 ~/.credentials/youtube-go.json
+*/
 package main
 
 import (
@@ -58,25 +63,25 @@ https://developers.google.com/api-client-library/python/guide/aaa_client_secrets
 // then generate a Client. It returns the generated Client.
 func getClient(scope string) *http.Client {
 	ctx := context.Background()
-	
+
 	b, err := ioutil.ReadFile("client_secret.json")
 	if err != nil {
 		log.Fatalf("Unable to read client secret file: %v", err)
 	}
-	
+
 	// If modifying the scope, delete your previously saved credentials
 	// at ~/.credentials/youtube-go.json
 	config, err := google.ConfigFromJSON(b, scope)
 	if err != nil {
 		log.Fatalf("Unable to parse client secret file to config: %v", err)
 	}
-	
+
 	// Use a redirect URI like this for a web app. The redirect URI must be a
 	// valid one for your OAuth2 credentials.
-	config.RedirectURL = "http://localhost:8090"
+	// config.RedirectURL = "http://localhost:8090"
 	// Use the following redirect URI if launchWebServer=false in oauth2.go
-	// config.RedirectURL = "urn:ietf:wg:oauth:2.0:oob"
-	
+	config.RedirectURL = "urn:ietf:wg:oauth:2.0:oob"
+
 	cacheFile, err := tokenCacheFile()
 	if err != nil {
 		log.Fatalf("Unable to get path to cached credential file. %v", err)
@@ -149,8 +154,8 @@ func exchangeToken(config *oauth2.Config, code string) (*oauth2.Token, error) {
 // to enter the token on the command line. It returns the retrieved Token.
 func getTokenFromPrompt(config *oauth2.Config, authURL string) (*oauth2.Token, error) {
 	var code string
-	fmt.Printf("Go to the following link in your browser. After completing " +
-		"the authorization flow, enter the authorization code on the command " +
+	fmt.Printf("Go to the following link in your browser. After completing "+
+		"the authorization flow, enter the authorization code on the command "+
 		"line: \n%v\n", authURL)
 
 	if _, err := fmt.Scan(&code); err != nil {
